@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Práctica 8–Intents Explícitos</string>
+    <string name="text_view_user">User</string>
+    <string name="text_view_password">Password</string>
+    <string name="edit_text_user">Insert user</string>
+    <string name="edit_text_password">Insert password</string>
+    <string name="btn_sign_in">Sign In</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="text_view_repeat_password">Repeat the password</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="welcome">Welcome:</string>
+    <string name="error_sign_in_not_filled">Incorrect username or password</string>
+    <string name="error_sign_up_not_filled">The form is not filled</string>
+    <string name="error_sign_up_password_not_match">The password doesn\'t match</string>
+    <string name="user_created_successfully">User created successfully</string>
+</resources>

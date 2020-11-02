@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Práctica 8–Intents Explícitos</string>
+    <string name="text_view_user">Usuario</string>
+    <string name="text_view_password">Contraseña</string>
+    <string name="edit_text_user">Inserte usuario</string>
+    <string name="edit_text_password">Inserte contraseña</string>
+    <string name="btn_sign_in">Login</string>
+    <string name="btn_sign_up">Registro</string>
+    <string name="text_view_repeat_password">Repita la contraseña</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="welcome">Bienvenido:</string>
+    <string name="error_sign_in_not_filled">Usuario o contraseña incorrecta</string>
+    <string name="error_sign_up_not_filled">El formulario no está rellenado</string>
+    <string name="error_sign_up_password_not_match">La contraseña no coincide</string>
+    <string name="user_created_successfully">Usuario creado correctamente</string>
+</resources>
