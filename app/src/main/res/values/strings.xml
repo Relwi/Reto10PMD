@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Práctica 8–Intents Explícitos</string>
+    <string name="app_name">Reto10PMD</string>
     <string name="text_view_user">User</string>
     <string name="text_view_password">Password</string>
     <string name="edit_text_user">Insert user</string>

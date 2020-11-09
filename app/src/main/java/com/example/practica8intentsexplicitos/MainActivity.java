@@ -3,17 +3,20 @@ package com.example.practica8intentsexplicitos;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
 
 public class MainActivity extends AppCompatActivity {
-    private final ArrayList<User> alUser = new ArrayList<>();
+    private SQLiteDatabase db = null;
 
     private EditText editTextUser = null;
     private EditText editTextPassword = null;
@@ -25,9 +28,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Creando base de datos
+        db = openOrCreateDatabase("reto10", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS users (user VARCHAR, password VARCHAR, score INT)");
+
         // Insertamos los usuarios user y admin
-        alUser.add(new User("user", "user"));
-        alUser.add(new User("admin", "admin"));
+        db.execSQL("INSERT INTO users VALUES ('user', 'user', 0)");
+        db.execSQL("INSERT INTO users VALUES ('admin', 'admin', 0)");
 
         editTextUser = (EditText) findViewById(R.id.main_EditTextUser);
         editTextPassword = (EditText) findViewById(R.id.main_EditTextPassword);
@@ -36,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editTextFilled() && userExist()) {
+                if (ifEditTextFilled() && ifUserExistOnDatabase()) {
                     Intent signInIntent = new Intent(MainActivity.this, DashboardActivity.class);
                     signInIntent.putExtra("USER", editTextUser.getText().toString());
                     startActivity(signInIntent);
@@ -56,21 +63,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public boolean editTextFilled() {
+    public boolean ifEditTextFilled() {
         return !editTextUser.getText().toString().equals("") && !editTextPassword.getText().toString().equals("");
     }
 
-    public boolean userExist() {
-        if (!(alUser.isEmpty())) {
-            for (User user : alUser) {
-                if (user.getUser().equals(editTextUser.getText().toString()) && user.getPassword().equals(editTextPassword.getText().toString()))
-                    return true;
-            }
+    public boolean ifUserExistOnDatabase() {
+        Cursor cursor = db.rawQuery("SELECT user, password FROM users", null);
+        while (cursor.moveToNext()) {
+            if (editTextUser.getText().toString().equals(cursor.getString(0)) && editTextPassword.getText().toString().equalsIgnoreCase(cursor.getString(1)))
+                return true;
         }
         return false;
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SIGNUP_ACTIVITY && resultCode == RESULT_OK) {
@@ -79,5 +85,5 @@ public class MainActivity extends AppCompatActivity {
             Toast toastUserSignUpCorrect = Toast.makeText(getApplicationContext(), getText(R.string.user_created_successfully), Toast.LENGTH_SHORT);
             toastUserSignUpCorrect.show();
         }
-    }
+    }*/
 }

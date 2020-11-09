@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Práctica 8–Intents Explícitos</string>
+    <string name="app_name">Reto10PMD</string>
     <string name="text_view_user">Usuario</string>
     <string name="text_view_password">Contraseña</string>
     <string name="edit_text_user">Inserte usuario</string>
