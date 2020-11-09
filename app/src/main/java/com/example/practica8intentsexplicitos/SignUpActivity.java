@@ -36,11 +36,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (editTextFilled()) {
                     if (passwordMatch()) {
+                        MainActivity.db.execSQL("INSERT INTO users VALUES('" + editTextUser.getText().toString() + "','" + editTextPassword.getText().toString() + "',0)");
                         Intent returnToMainActivityIntent = new Intent(SignUpActivity.this, MainActivity.class);
-                        returnToMainActivityIntent.putExtra("USER", editTextUser.getText().toString());
-                        returnToMainActivityIntent.putExtra("PASSWORD", editTextPassword.getText().toString());
-                        setResult(RESULT_OK, returnToMainActivityIntent);
-                        finish();
+                        startActivity(returnToMainActivityIntent);
                     } else {
                         Toast toastPasswordNotMatch = Toast.makeText(getApplicationContext(), getText(R.string.error_sign_up_password_not_match), Toast.LENGTH_SHORT);
                         toastPasswordNotMatch.show();

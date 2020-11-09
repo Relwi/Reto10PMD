@@ -16,12 +16,10 @@ import android.widget.Toast;
 import java.sql.PreparedStatement;
 
 public class MainActivity extends AppCompatActivity {
-    private SQLiteDatabase db = null;
+    protected static SQLiteDatabase db = null;
 
     private EditText editTextUser = null;
     private EditText editTextPassword = null;
-
-    public static final int SIGNUP_ACTIVITY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +31,11 @@ public class MainActivity extends AppCompatActivity {
         db.execSQL("CREATE TABLE IF NOT EXISTS users (user VARCHAR, password VARCHAR, score INT)");
 
         // Insertamos los usuarios user y admin
-        db.execSQL("INSERT INTO users VALUES ('user', 'user', 0)");
-        db.execSQL("INSERT INTO users VALUES ('admin', 'admin', 0)");
+        Cursor cursor = db.rawQuery("SELECT user, password FROM users", null);
+        if (cursor.getCount() == 0) {
+            db.execSQL("INSERT INTO users VALUES ('user', 'user', 0)");
+            db.execSQL("INSERT INTO users VALUES ('admin', 'admin', 0)");
+        }
 
         editTextUser = (EditText) findViewById(R.id.main_EditTextUser);
         editTextPassword = (EditText) findViewById(R.id.main_EditTextPassword);
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent signUpIntent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivityForResult(signUpIntent, SIGNUP_ACTIVITY);
+                startActivity(signUpIntent);
             }
         });
     }
@@ -75,15 +76,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SIGNUP_ACTIVITY && resultCode == RESULT_OK) {
-            alUser.add(new User(data.getStringExtra("USER"), data.getStringExtra("PASSWORD")));
-
-            Toast toastUserSignUpCorrect = Toast.makeText(getApplicationContext(), getText(R.string.user_created_successfully), Toast.LENGTH_SHORT);
-            toastUserSignUpCorrect.show();
-        }
-    }*/
 }
