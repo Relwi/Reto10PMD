@@ -26,16 +26,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Creando base de datos
+        // Creando base de datos y tabla de Users y Words
         db = openOrCreateDatabase("reto10", Context.MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS users (user VARCHAR, password VARCHAR, score INT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS words (wordEnglish VARCHAR, wordSpanish VARCHAR)");
 
         // Insertamos los usuarios user y admin
-        Cursor cursor = db.rawQuery("SELECT user, password FROM users", null);
-        if (cursor.getCount() == 0) {
+        Cursor cursorUsers = db.rawQuery("SELECT user, password FROM users", null);
+        if (cursorUsers.getCount() == 0) {
             db.execSQL("INSERT INTO users VALUES ('user', 'user', 0)");
             db.execSQL("INSERT INTO users VALUES ('admin', 'admin', 0)");
         }
+        cursorUsers.close();
+
+        // Insertamos las palabras
+        Cursor cursorWords = db.rawQuery("SELECT wordEnglish, wordSpanish FROM words", null);
+        if (cursorWords.getCount() == 0) {
+            db.execSQL("INSERT INTO words VALUES ('wheelhouse', 'timonera')");
+            db.execSQL("INSERT INTO words VALUES ('monostylar', 'monostilar')");
+            db.execSQL("INSERT INTO words VALUES ('ophthalmoscope', 'oftalmoscopio')");
+            db.execSQL("INSERT INTO words VALUES ('kneelet', 'rodillera')");
+            db.execSQL("INSERT INTO words VALUES ('spodium', 'ceniza')");
+        }
+        cursorWords.close();
 
         editTextUser = (EditText) findViewById(R.id.main_EditTextUser);
         editTextPassword = (EditText) findViewById(R.id.main_EditTextPassword);
