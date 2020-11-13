@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".DashboardActivity"></activity>
+        <activity
+            android:name=".DashboardActivity"
+            android:windowSoftInputMode="stateVisible"></activity>
     </application>
 
 </manifest>
